@@ -1,13 +1,13 @@
 # Meshviewer Installation
 
 # Software used
-OS: Debian 9 (stretch)
-influxdb: 1.6.1
-Grafana: 5.2.2
-meshviewer: https://github.com/ffrgb/meshviewer 
-yanic: https://github.com/FreifunkBremen/yanic
-mesh-announce: https://github.com/ffnord/mesh-announce
-nginx: 1.10.3
+OS: Debian 9 (stretch). 
+influxdb: 1.6.1. 
+Grafana: 5.2.2. 
+meshviewer: https://github.com/ffrgb/meshviewer. 
+yanic: https://github.com/FreifunkBremen/yanic. 
+mesh-announce: https://github.com/ffnord/mesh-announce. 
+nginx: 1.10.3. 
 
 # Installation
 
