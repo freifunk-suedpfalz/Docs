@@ -1,6 +1,6 @@
-#Meshviewer Installation
+# Meshviewer Installation
 
-#Software used
+# Software used
 OS: Debian 9 (stretch)
 influxdb: 1.6.1
 Grafana: 5.2.2
@@ -9,17 +9,19 @@ yanic: https://github.com/FreifunkBremen/yanic
 mesh-announce: https://github.com/ffnord/mesh-announce
 nginx: 1.10.3
 
-#Installation
+# Installation
 
-##mesh-announce
+## mesh-announce
 It is installed on a supernode. Announces the information of the gateway using respondd. 
 
+```console
 git clone https://github.com/ffnord/mesh-announce /opt/mesh-announce
 cd /opt/mesh-announce
 cp /opt/mesh-announce/respondd.service /etc/systemd/system/
 vi /etc/systemd/system/respondd.service
+```
 
-```console
+```
 [Unit]
 Description=Respondd
 After=network.target
@@ -32,19 +34,22 @@ Environment=PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 [Install]
 WantedBy=multi-user.target
 ```
-
+```console
 systemctl start respondd
 systemctl enable respondd
 systemctl daemon-reload
+```
 
 ## yanic
 Yanic is installed on a Supernode. It collects the data of all nodes and creates the nodes.json and meshviewer.json.
 
 https://freifunkbremen.gitbooks.io/yanic/content/docs/docs_install.html
 
-vi /etc/yanic.conf
-
 ```console
+vi /etc/yanic.conf
+```
+
+```
 [respondd]
 enable           = true
 synchronize      = "1m"
@@ -151,6 +156,7 @@ path     = "/var/log/yanic.log"
 ## influxdb
 Database storing the graph information.
 
+```console
 wget https://dl.influxdata.com/influxdb/releases/influxdb_1.6.1_amd64.deb
 sudo dpkg -i influxdb_1.6.1_amd64.deb
 
@@ -159,8 +165,9 @@ CREATE USER admin WITH PASSWORD '<password>' WITH ALL PRIVILEGES
 CREATE USER ffsuew WITH PASSWORD '<password>'
 CREATE DATABASE "ffsuew"
 GRANT ALL ON ffsuew TO ffsuew
+```
 
-```console
+```
 ### Welcome to the InfluxDB configuration file.
 
 # The values in this file override the default values used by the system if
@@ -719,18 +726,21 @@ GRANT ALL ON ffsuew TO ffsuew
   # max-version = "tls1.2"
 ```
 
+```console
 systemctl start influxd.service 
 systemctl enable influxd.service
 systemctl daemon-reload
+```
 
-##meshviewer
+## meshviewer
 The web application containing the map and node infos.
-
+```console
 cd /opt
 git clone https://github.com/ffrgb/meshviewer.git
-
 vi /opt/meshviewer/config.js
- ```console
+```
+
+```
  module.exports = function () {
   return {
     // Variables are NODE_ID and NODE_NAME (only a-z0-9\- other chars are replaced with _)
@@ -843,23 +853,30 @@ vi /opt/meshviewer/config.js
   };
 };
 ```
-gulp
-
-vi /opt/data/getData.sh
 ```console
+gulp
+vi /opt/data/getData.sh
+```
+
+```
 /usr/bin/wget -r -nH --cut-dirs=2 -P /opt/meshviewer/build/data/ http://78.46.193.78:8080/data/
 ```
-chmod +x /opt/data/getData.sh
-crontab -e
 
 ```console
+chmod +x /opt/data/getData.sh
+crontab -e
+```
+
+```
 * * * * * /opt/data/getData.sh
 ```
 
 ##nginx
-
-vi /etc/nginx/sites-enabled/default
 ```console
+vi /etc/nginx/sites-enabled/default
+```
+
+```
 server {
         server_name  map.nerdparty.holzmolz.de;
         
@@ -898,6 +915,8 @@ server {
 }
 ```
 
+```console
 systemctl start nginx
 systemctl enable nginx
 systemctl daemon-reload
+```
