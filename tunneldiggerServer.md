@@ -1,27 +1,27 @@
 #Installing the tunneldigger Server
 
 ```
-mkdir /opt/wlan_slov_tunneldigger
-cd /opt/wlan_slov_tunneldigger/
-apt-get install iproute bridge-utils libnetfilter-conntrack-dev libnfnetlink-dev libffi-dev python-dev libevent-dev ebtables python-virtualenv
-virtualenv env_tunneldigger
-git clone https://github.com/wlanslovenija/tunneldigger.git
-source env_tunneldigger/bin/activate
-cd tunneldigger/
-cd broker/
-python setup.py 
+$ mkdir /opt/wlan_slov_tunneldigger
+$ cd /opt/wlan_slov_tunneldigger/
+$ apt-get install iproute bridge-utils libnetfilter-conntrack-dev libnfnetlink-dev libffi-dev python-dev libevent-dev ebtables $ python-virtualenv
+$ virtualenv env_tunneldigger
+$ git clone https://github.com/wlanslovenija/tunneldigger.git
+$ source env_tunneldigger/bin/activate
+$ cd tunneldigger/
+$ cd broker/
+$ python setup.py 
 
-vi /etc/modules
+$ vi /etc/modules
 ```
 ```
-batman-adv
-nf_conntrack_netlink
-nf_conntrack
-nfnetlink
-l2tp_core
-l2tp_eth
-l2tp_netlink
-ebtables
+_batman-adv_
+_nf_conntrack_netlink_
+_nf_conntrack_
+_nfnetlink_
+_l2tp_core_
+_l2tp_eth_
+_l2tp_netlink_
+_ebtables_
 ```
 ```
 cp l2tp_broker.cfg.example l2tp_broker.cfg
