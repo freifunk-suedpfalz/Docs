@@ -13,21 +13,23 @@ $ python setup.py
 
 $ vi /etc/modules
 ```
+/etc/modules
 ```
-_batman-adv_
-_nf_conntrack_netlink_
-_nf_conntrack_
-_nfnetlink_
-_l2tp_core_
-_l2tp_eth_
-_l2tp_netlink_
-_ebtables_
+batman-adv
+nf_conntrack_netlink
+nf_conntrack
+nfnetlink
+l2tp_core
+l2tp_eth
+l2tp_netlink
+ebtables
 ```
 ```
-cp l2tp_broker.cfg.example l2tp_broker.cfg
+$ cp l2tp_broker.cfg.example l2tp_broker.cfg
 
-vi l2tp_broker.cfg
+$ vi l2tp_broker.cfg
 ```
+l2tp_broker.cfg
 ```
 [broker]
 ; IP address the broker will listen and accept tunnels on
@@ -87,10 +89,11 @@ session.down=
 session.mtu-changed=
 ```
 ```
-mkdir /opt/wlan_slov_tunneldigger/tunneldigger/scripts
+$ mkdir /opt/wlan_slov_tunneldigger/tunneldigger/scripts
 
-vi /opt/wlan_slov_tunneldigger/tunneldigger/scripts/session-pre-down.sh
+$ vi /opt/wlan_slov_tunneldigger/tunneldigger/scripts/session-pre-down.sh
 ```
+/opt/wlan_slov_tunneldigger/tunneldigger/scripts/session-pre-down.sh
 ```
 !/bin/bash
 INTERFACE="$3"
@@ -98,8 +101,9 @@ INTERFACE="$3"
 exit 0
 ```
 ```
-vi /opt/wlan_slov_tunneldigger/tunneldigger/scripts/session-up.sh
+$ vi /opt/wlan_slov_tunneldigger/tunneldigger/scripts/session-up.sh
 ```
+/opt/wlan_slov_tunneldigger/tunneldigger/scripts/session-up.sh
 ```
     #!/bin/bash
     INTERFACE="$3"
@@ -122,9 +126,10 @@ vi /opt/wlan_slov_tunneldigger/tunneldigger/scripts/session-up.sh
     fi
 ```
 ```
-chmod +x .
-vi /opt/wlan_slov_tunneldigger/tunneldigger/start-broker.sh
+$ chmod +x .
+$ vi /opt/wlan_slov_tunneldigger/tunneldigger/start-broker.sh
 ```
+/opt/wlan_slov_tunneldigger/tunneldigger/start-broker.sh
 ```
 #!/bin/bash
 
@@ -137,17 +142,18 @@ source $VIRTUALENV_DIR/env_tunneldigger/bin/activate
 env_tunneldigger/bin/python -m tunneldigger_broker.main tunneldigger/broker/l2tp_broker.cfg
 ```
 ```
-chmod +x /opt/wlan_slov_tunneldigger/tunneldigger/start-broker.sh
+$ chmod +x /opt/wlan_slov_tunneldigger/tunneldigger/start-broker.sh
 
-vi broker/src/tunneldigger_broker/protocol.py
+$ vi broker/src/tunneldigger_broker/protocol.py
 ```
-Change line
+Change line in /opt/wlan_slov_tunneldigger/tunneldigger/broker/src/tunneldigger_broker/protocol.py
 ```
 FEATURE_UNIQUE_SESSION_ID = 1 << 0
 ```
 ```
-vi /etc/systemd/system/tunneldigger.service
+$ vi /etc/systemd/system/tunneldigger.service
 ```
+/etc/systemd/system/tunneldigger.service
 ```
 [Unit]
 Description = Start tunneldigger L2TPv3 broker
@@ -160,16 +166,17 @@ ExecStart = /opt/wlan_slov_tunneldigger/tunneldigger/start-broker.sh
 WantedBy = multi-user.target
 ```
 ```
-vi /etc/network/interfaces
+$ vi /etc/network/interfaces
 ```
-Add line
+Add line in /etc/network/interfaces
 ```
   # tunneldigger config
   source /etc/network/interfaces.d/tunneldigger.cfg
 ```
 ```
-vi /etc/network/interfaces.d/tunneldigger.cf
+$ vi /etc/network/interfaces.d/tunneldigger.cfg
 ```
+/etc/network/interfaces.d/tunneldigger.cfg
 ```
 # Tunneldigger VPN Interface
 auto tunneldigger
@@ -191,7 +198,7 @@ iface tunneldigger inet manual
   post-down brctl delbr $IFACE
 ``` 
 ```
-ifup tunneldigger
-systemctl enable tunneldigger.service
-systemctl start tunneldigger.service
+$ ifup tunneldigger
+$ systemctl enable tunneldigger.service
+$ systemctl start tunneldigger.service
 ```
