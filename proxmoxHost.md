@@ -48,5 +48,6 @@
     post-down iptables -t nat -D POSTROUTING -s '10.10.10.0/24' -o enp3s0 -j MASQUERADE
     #port forward from out to inside
     #to test vm
-    iptables -t nat -A PREROUTING -i vmbr0 -p tcp --dport 11122 -j DNAT --to 10.10.10.11:22
+    post-up iptables -t nat -A PREROUTING -i enp3s0 -p tcp --dport 11122 -j DNAT --to 10.10.10.11:22
+    post-down iptables -t nat -D PREROUTING -i enp3s0 -p tcp --dport 11122 -j DNAT --to 10.10.10.11:22
   ```
